@@ -1,23 +1,29 @@
 <template>
-  <el-config-provider namespace="ep">
-    <BaseHeader />
-    <div style="display: flex">
-      <BaseSide />
-      <div>
-        <img alt="Vue logo" class="element-plus-logo" src="./assets/logo.png" />
-        <HelloWorld msg="Hello Vue 3.0 + Element Plus + Vite" />
-      </div>
-    </div>
-  </el-config-provider>
+<TableFrom :columns="columns" :data="data" :isEdit="isEdit"/>
 </template>
 
-<style>
-#app {
-  text-align: center;
-  color: var(--ep-text-color-primary);
-}
+<script lang="ts" setup>
+import TableFrom from './components/TableForm/index.vue'
+import { onMounted, ref, getCurrentInstance } from 'vue';
+const proxy = getCurrentInstance()
+const columns = [
+{field:'goods_name','type':'good_select','label':'商品'},
+{field:'price','type':'number_input','label':'价格'},
+{field:'goods_bar_code','type':'display','label':'条码'}
+]
 
-.element-plus-logo {
-  width: 50%;
-}
-</style>
+const data = ref([
+    {'goods_name':'红牛','goods_bar_code':'69*****red','price':'2.00',minWidth:200},
+    {'goods_name':'','goods_bar_code':'','price':'0.00',minWidth:200},
+    {'goods_name':'','goods_bar_code':'','price':'0.00',minWidth:200},
+    {'goods_name':'','goods_bar_code':'','price':'0.00',minWidth:200},
+    {'goods_name':'','goods_bar_code':'','price':'0.00',minWidth:200},
+    {'goods_name':'','goods_bar_code':'','price':'0.00',minWidth:200},
+])
+const isEdit = ref(true)
+
+onMounted(() => {
+    window.app = proxy 
+    // 控制台调用:window.app.setupState.data 即可打印data
+})
+</script>
